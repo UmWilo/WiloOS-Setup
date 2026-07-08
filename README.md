@@ -1,5 +1,5 @@
 # WiloOS-Setup
-Script pessoal para automatizar a instalação basica no Fedora KDE.
+Meu primeiro script pessoal para automatizar a instalação basica no Fedora KDE.
 
 # Este script foi feito para minhas preferências pessoais. Use por sua conta e risco.
 
