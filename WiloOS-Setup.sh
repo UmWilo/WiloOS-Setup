@@ -1,11 +1,37 @@
 #!/usr/bin/env bash
 # ============================
 # WiloOS Setup
-# Versão: 1.0.0
-# Fedora: 44
-# Autor: Wilo
+# Versão: 1.0.5
+# Autor: Wilo 
+# Copyright (c) 2026 Wilo
+# ============================
+# Ao rodar este .sh, ele irá detectar os componentes da sua máquina
+# e reescrever o próprio código, adicionando apenas as informações
+# dos componentes (sistema, CPU, GPU e RAM) logo abaixo do copyright.
 # ============================
 
+ColetarInfoSistema() {
+    local cpu ram gpu distro script_path
+    cpu=$(lscpu | grep -m1 -E "Nome do mod|Model name" | sed 's/^[^:]*: *//')
+    gpu=$(lspci | grep -i -m1 'vga\|3d' | sed 's/^.*: //')
+    ram=$(free -h | awk '/Mem:/ {print $2}')
+    distro=$(cat /etc/fedora-release 2>/dev/null || uname -o)
+    script_path=$(readlink -f "$0")
+
+    echo "Componentes detectados:"
+    echo "  Sistema: $distro"
+    echo "  CPU: $cpu"
+    echo "  GPU: $gpu"
+    echo "  RAM: $ram"
+
+    # Remove infos antigas (se já existirem de uma execução anterior)
+    sed -i '/^# Sistema:/d; /^# CPU:/d; /^# GPU:/d; /^# RAM:/d' "$script_path"
+
+    # Insere as infos novas logo após "# Copyright (c) 2024 Wilo"
+    sed -i "/^# Copyright (c) 2026 Wilo/a # Sistema: ${distro}\n# CPU: ${cpu}\n# GPU: ${gpu}\n# RAM: ${ram}" "$script_path"
+
+    WiloIF "Componentes registrados no cabeçalho" $?
+}
 WiloIF() {
     local mensagem="$1"
     local status="$2"
@@ -62,7 +88,9 @@ else
     exit 1
 fi
 
+ColetarInfoSistema
 echo "Iniciando a instalação do WiloOS"
+
 Wiloading 5
 
 # Easter egg
