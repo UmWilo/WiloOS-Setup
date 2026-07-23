@@ -23,7 +23,7 @@ Meu primeiro script pessoal para automatizar a instalação basica no Fedora KDE
 ## Compatibilidade
 -Testado no Fedora 44 KDE Plasma.
 
--Pode funcionar em outras versões recentes do Fedora KDE, mas não foi testado.
+-Pode funcionar em outras versões do Fedora KDE, no entanto não foi testado.
 
 -Não é compatível com Ubuntu/Debian sem modificações, pois usa `dnf`.
 
