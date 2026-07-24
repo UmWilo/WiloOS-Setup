@@ -16,7 +16,7 @@ Meu primeiro script pessoal para automatizar a instalação basica no Fedora KDE
 
 - linux (fedora KDE plasma)
 - Gerenciador DNF
-- Flapak
+- Flatpak
 - Conexão com a internet
 - Permissões de superusuário (`sudo`)
 
