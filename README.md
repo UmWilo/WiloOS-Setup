@@ -32,5 +32,5 @@ Meu primeiro script pessoal para automatizar a instalação basica no Fedora KDE
 ```bash
 git clone https://github.com/UmWilo/WiloOS-Setup.git
 cd WiloOS-Setup
-chmod +x WiloOS-Setup.sh
-./WiloOS-Setup.sh
+chmod +x WiloChoice.sh
+./WiloChoice.sh
