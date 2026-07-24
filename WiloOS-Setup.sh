@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # ============================
 # WiloOS Setup
-# Versão: 1.0.5
+# Versão: 1.0.0
 # Autor: Wilo 
 # Copyright (c) 2026 Wilo
 # ============================
@@ -28,7 +28,7 @@ ColetarInfoSistema() {
     sed -i '/^# Sistema:/d; /^# CPU:/d; /^# GPU:/d; /^# RAM:/d' "$script_path"
 
     # Insere as infos novas logo após "# Copyright (c) 2024 Wilo"
-    sed -i "/^# Copyright (c) 2026 Wilo/a # Sistema: ${distro}\n# CPU: ${cpu}\n# GPU: ${gpu}\n# RAM: ${ram}" "$script_path"
+    sed -i "/^# Copyright (c) 2024 Wilo/a # Sistema: ${distro}\n# CPU: ${cpu}\n# GPU: ${gpu}\n# RAM: ${ram}" "$script_path"
 
     WiloIF "Componentes registrados no cabeçalho" $?
 }
