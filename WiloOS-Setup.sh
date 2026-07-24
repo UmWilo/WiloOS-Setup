@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
+
 # ============================
-# WiloOS Setup
-# Versão: 1.0.0
-# Autor: Wilo 
-# Copyright (c) 2026 Wilo
+# WiloUnistall-Setup
+# Versão: 1.1.0
+# Autor: UmWilo 
+# Copyright (c) 2026 UmWilo
 # ============================
 # Ao rodar este .sh, ele irá detectar os componentes da sua máquina
 # e reescrever o próprio código, adicionando apenas as informações
@@ -27,8 +28,8 @@ ColetarInfoSistema() {
     # Remove infos antigas (se já existirem de uma execução anterior)
     sed -i '/^# Sistema:/d; /^# CPU:/d; /^# GPU:/d; /^# RAM:/d' "$script_path"
 
-    # Insere as infos novas logo após "# Copyright (c) 2024 Wilo"
-    sed -i "/^# Copyright (c) 2024 Wilo/a # Sistema: ${distro}\n# CPU: ${cpu}\n# GPU: ${gpu}\n# RAM: ${ram}" "$script_path"
+    # Insere as infos novas logo após "# Copyright (c) 2026 UmWilo"
+    sed -i "/^# Copyright (c) 2026 UmWilo/a # Sistema: ${distro}\n# CPU: ${cpu}\n# GPU: ${gpu}\n# RAM: ${ram}" "$script_path"
 
     WiloIF "Componentes registrados no cabeçalho" $?
 }
@@ -64,12 +65,12 @@ WiloRun() {
     local mensagem="$1"
     shift
 
-    echo "▶ $mensagem"
+    echo "► $mensagem"
     "$@"
-    local pid=$!
+    local status=$?
 
-    WiloIF "$mensagem" $status
-    return $status
+    WiloIF "$mensagem" "$status"
+    return "$status"
 }
 
 WiloText() {
@@ -144,12 +145,11 @@ if (( RANDOM % 100 == 0 )); then
     fi
 fi
 
-echo "Atualizando sistema"
 Wiloading 2
-WiloRun "Atualizando sistema" sudo dnf update -y
-WiloIF "Atualizando sistema" $?
 
-echo "Instalando pacotes DNF"
+WiloRun "Atualizando sistema" sudo dnf update -y
+
+
 WiloRun "Instalando pacotes DNF" sudo dnf install -y \
     git \
     zsh \
@@ -163,11 +163,11 @@ WiloRun "Instalando pacotes DNF" sudo dnf install -y \
     krita \
     kdenlive \
     code
-WiloIF "Instalando pacotes DNF" $?
 
 echo "Garantindo que o Flathub esteja adicionado e instalando pacotes Flatpak"
+
 WiloRun "Adicionando repositório Flathub" sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-WiloIF "Adicionando repositório Flathub" $?
+
 WiloRun "Instalando pacotes Flatpak" flatpak install -y flathub \
     com.spotify.Client \
     io.github.Soundux \
@@ -176,28 +176,23 @@ WiloRun "Instalando pacotes Flatpak" flatpak install -y flathub \
     net.davidotek.pupgui2 \
     com.brave.Browser \
     com.github.ztefn.haguichi
-WiloIF "Instalando pacotes Flatpak" $?
 
-echo "Instalando ferramentas de customização KDE"
+
 WiloRun "Instalando ferramentas de customização KDE" sudo dnf install -y \
     kvantum \
     qt5ct \
     qt6ct \
     papirus-icon-theme \
     sassc
-WiloIF "Instalando ferramentas de customização KDE" $?
 
-echo "Instalando Tela Circle Icons"
+
 WiloRun "Instalando Tela Circle Icons" bash -c 'cd /tmp && git clone https://github.com/vinceliuice/Tela-circle-icon-theme.git && cd Tela-circle-icon-theme && ./install.sh -a'
-WiloIF "Instalando Tela Circle Icons" $?
 
-echo "Instalando Nordic KDE"
+
 WiloRun "Instalando Nordic KDE" bash -c 'cd /tmp && rm -rf Nordic && git clone https://github.com/EliverLara/Nordic.git && cd Nordic/kde && ./install.sh'
-WiloIF "Instalando Nordic KDE" $?
 
-echo "Aplicando configurações KDE"
+
 WiloRun "Aplicando configurações KDE" bash -c 'lookandfeeltool -a Nordic && kwriteconfig6 --file kdeglobals --group Icons --key Theme Tela-circle-dark && kwriteconfig6 --group KDE --key SingleClick false'
-WiloIF "Aplicando configurações KDE" $?
 
 echo "Reiniciando Plasma"
 WiloText "Aguarde" 1
