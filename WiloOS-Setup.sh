@@ -5,6 +5,10 @@
 # Versão: 1.1.0
 # Autor: UmWilo 
 # Copyright (c) 2026 UmWilo
+# Sistema: Fedora release 44 (Forty Four)
+# CPU: AMD Ryzen 3 5300G with Radeon Graphics
+# GPU: Advanced Micro Devices, Inc. [AMD/ATI] Cezanne [Radeon Vega Series / Radeon Vega Mobile Series] (rev ca)
+# RAM: 13Gi
 # ============================
 # Ao rodar este .sh, ele irá detectar os componentes da sua máquina
 # e reescrever o próprio código, adicionando apenas as informações

@@ -11,13 +11,11 @@ DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 echo "O que você deseja fazer?"
 echo "1) Instalar (Setup)"
-echo "2) Atualizar (Update)"
-echo "3) Desinstalar (Uninstall)"
+echo "2) Desinstalar (Uninstall)"
 read -p "Escolha uma opção: " opcao
 
 case "$opcao" in
     1) exec bash "$DIR/WiloOS-Setup.sh" ;;
-    2) exec bash "$DIR/WiloUpdate.sh" ;;
-    3) exec bash "$DIR/WiloUninstall.sh" ;;
+    2) exec bash "$DIR/WiloUninstall.sh" ;;
     *) echo "Opção inválida."; exit 1 ;;
 esac
