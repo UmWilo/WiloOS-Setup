@@ -1,34 +1,97 @@
-# WiloOS-Setup
-Meu primeiro script pessoal para automatizar a instalação basica no Fedora KDE (que se tornou um mega-projeto).
+# 🐧 WiloOS
 
-# Este script foi feito para minhas preferências pessoais. Use por sua conta e risco.
+**WiloOS** é um conjunto de scripts para automatizar e personalizar a configuração de sistemas Linux.
 
-## Recursos
+A ideia é simples: instalar, configurar e atualizar componentes do sistema sem precisar repetir manualmente um monte de comandos.
 
-- atualiza o sistema
-- instala pacotes
-- instala 1 interface grafica dentre 3: KDE PLASMA, XFCE e HYPRLAND
-- instala pacotes flatpak e atualiza ou garante o flathub
-- instala temas e arquivos de customização
-- configura uma pequena parte do ARCH linux (se necessario)
-- instala 1gb de wallpapers
+---
 
-## Requisitos
+## 🚀 Suporte
 
-- Linux
-- Flatpak
-- Conexão com a internet
-- Permissões de superusuário (`sudo`)
+Atualmente, o WiloOS possui suporte para os seguintes gerenciadores de pacotes:
 
-## Compatibilidade
+* 🟦 **DNF** — Fedora
+* 🟨 **APT** — Debian, Ubuntu e derivados
+* 🟥 **PACMAN** — Arch Linux e derivados
 
-- Funciona em sistemas que utilizam os gerenciadores de instalação: DNF, APT e PACMAN
+---
 
+## 📦 Principais arquivos
 
-## Como usar
+| Arquivo                      | Função                                                   |
+| ---------------------------- | -------------------------------------------------------- |
+| `WiloOS-Setup.sh`            | Instalação e configuração principal do WiloOS            |
+| `WiloFunctions.sh`           | Funções utilizadas pelos scripts                         |
+| `WiloChoice.sh`              | Sistema de escolhas/interação                            |
+| `WiloUpdates.sh`             | Sistema de atualização                                   |
+| `WiloUninstall.sh`           | Desinstalação do WiloOS                                  |
+| `WiloConfigArch(Pro Max).sh` | Configurações específicas para Arch Linux — **PRO MAX™** |
+
+---
+
+## 🖼️ Wallpapers
+
+O WiloOS também instala uma pasta com wallpapers.
+
+Você pode:
+
+* usar os wallpapers;
+* trocar por outros;
+* editar;
+* apagar;
+* ignorar completamente;
+* fazer absolutamente o que quiser.
+
+**Receba os wallpapers. É isso. 🗿**
+
+---
+
+## ⚙️ Instalação
+
+Clone o repositório:
 
 ```bash
 git clone https://github.com/UmWilo/WiloOS-Setup.git
 cd WiloOS-Setup
-chmod +x WiloChoice.sh
-./WiloChoice.sh
+```
+
+Depois execute o instalador:
+
+```bash
+chmod +x WiloOS-Setup.sh
+./WiloOS-Setup.sh
+```
+
+> ⚠️ Alguns recursos podem exigir privilégios de administrador.
+
+---
+
+## 🔄 Atualizações
+
+O WiloOS possui um sistema próprio de atualização através do:
+
+```text
+WiloUpdates.sh
+```
+
+Isso permite manter os componentes do projeto atualizados sem precisar configurar tudo novamente.
+
+---
+
+## 🛠️ Status do projeto
+
+O WiloOS está em desenvolvimento ativo.
+
+Novos recursos, correções e melhorias podem ser adicionados ao longo do desenvolvimento.
+
+---
+
+## 📜 Licença
+
+Consulte o arquivo `LICENSE` para obter informações sobre a licença do projeto.
+
+---
+
+### 🗿 WiloOS
+
+**Linux, só que do jeito do Wilo.**
