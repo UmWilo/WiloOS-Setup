@@ -1,31 +1,29 @@
 # WiloOS-Setup
-Meu primeiro script pessoal para automatizar a instalação basica no Fedora KDE.
+Meu primeiro script pessoal para automatizar a instalação basica no Fedora KDE (que se tornou um mega-projeto).
 
 # Este script foi feito para minhas preferências pessoais. Use por sua conta e risco.
 
 ## Recursos
 
-- Atualiza o sistema.
-- Instala pacotes DNF.
-- Instala aplicativos Flatpak.
-- Instala temas (Nordic e Tela Circle).
-- Aplica configurações do KDE.
-- Possui um pequeno easter egg.
+- atualiza o sistema
+- instala pacotes
+- instala 1 interface grafica dentre 3: KDE PLASMA, XFCE e HYPRLAND
+- instala pacotes flatpak e atualiza ou garante o flathub
+- instala temas e arquivos de customização
+- configura uma pequena parte do ARCH linux (se necessario)
+- instala 1gb de wallpapers
 
 ## Requisitos
 
-- linux (fedora KDE plasma)
-- Gerenciador DNF
+- Linux
 - Flatpak
 - Conexão com a internet
 - Permissões de superusuário (`sudo`)
 
 ## Compatibilidade
--Testado no Fedora 44 KDE Plasma.
 
--Pode funcionar em outras versões do Fedora KDE, no entanto não foi testado.
+- Funciona em sistemas que utilizam os gerenciadores de instalação: DNF, APT e PACMAN
 
--Não é compatível com Ubuntu/Debian sem modificações, pois usa `dnf`.
 
 ## Como usar
 

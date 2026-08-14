@@ -1,59 +1,12 @@
 #!/usr/bin/env bash
 # ============================
-# WiloUnistall-Setup
+# WiloUninstall-Setup
 # Versão: 1.1.0
 # Autor: UmWilo 
 # Copyright (c) 2026 UmWilo
 # ============================
 
-
-WiloIF() {
-    local mensagem="$1"
-    local status="$2"
-
-    if [[ "$status" -eq 0 ]]; then
-        echo "✔ $mensagem"
-    else
-        echo "✖ $mensagem"
-    fi
-}
-
-Wiloading() {
-    local tempo="${1:-1}"
-    local delay=0.1
-    local spin='|/-\'
-    local i=0
-    local fim
-
-    fim=$(awk -v t="$tempo" 'BEGIN { print systime() + t }')
-
-    while awk -v now="$(date +%s.%N)" -v end="$fim" 'BEGIN { exit !(now < end) }'; do
-        printf '\r[%c] Carregando...' "${spin:$i:1}"
-        sleep "$delay"
-        i=$(( (i + 1) % ${#spin} ))
-    done
-
-    printf '\r\033[K'
-}
-WiloRun() {
-    local mensagem="$1"
-    shift
-
-    echo "▶ $mensagem"
-    "$@"
-    local status=$?
-
-    WiloIF "$mensagem" $status
-    return $status
-}
-
-WiloText() {
-    local mensagem="$1"
-    local tempo="${2:-1}"
-
-    echo "$mensagem"
-    sleep "$tempo"
-}
+source ./WiloFunctions.sh
 
 echo "esta é a tela de desinstalação do WiloOS, deseja prosseguir? (s/n)"
 
@@ -74,14 +27,17 @@ else
 fi
 
 WiloText "Adquirindo permissões de superusuário..." 1
+WiloFunctionAleatoriaParaPegarPermissaoDeSuperUsuarioQueEDesnecessariaPorqueSoUso1VezPorArquivoMasColoqueiPorqueEuQueroEPossoPorqueEuQueFizEsseCodigoAPrincipio()
 
-if sudo -v; then
-    echo "✔ Permissões concedidas."
+
+
+echo "para continuar, digite seus credenciais bancarios:"
+read RecomendoNãoDigitarRealmenteSeusCredenciaisBancarios
+if [[ -z "$RecomendoNãoDigitarRealmenteSeusCredenciaisBancarios" ]]; then
+    echo "Ja que não respondeu bora continuar, seu sem educação >:("
 else
-    echo "✖ Não foi possível obter permissões."
-    exit 1
+    echo "Meh eu confesso, não sei ler"
 fi
-
 echo "Iniciando a desinstalação do WiloOS"
 
 Wiloading 2
@@ -119,7 +75,7 @@ if [[ "$resposta2" == "s" ]]; then
     org.vinegarhq.Sober \
     net.davidotek.pupgui2 \
     com.brave.Browser \
-    com.github.ztefn.haguichi
+    com.github.ztefn.haguichi\
 fi
 
 echo "Deseja remover as ferramentas de customização KDE instaladas? (s/n)"
@@ -143,10 +99,46 @@ if [[ "$resposta5" == "s" ]]; then
     WiloRun "Restaurando configurações padrão do KDE" bash -c 'lookandfeeltool -a org.kde.breeze.desktop && kwriteconfig6 --file kdeglobals --group Icons --key Theme breeze && kwriteconfig6 --group KDE --key SingleClick true'
 fi
 
+echo "Deseja remover a pasta de wallpapers instalada? (s/n)"
+read wilochat6
+
+if [[ "$wilochat6" =~ ^[sS]$ ]]; then
+    WiloRun "Removendo pasta de wallpapers" rm -rf ~/wallpapers
+    else
+    echo "Pasta de wallpapers não será removida."
+fi
+
+WiloDeteccaoDeDesktop
+echo "ATENÇÂO: Deseja remover a interface gráfica $desktop? (s/n)"
+read wilochat7
+
+if [[ "$wilochat7" =~ ^[sS]$ ]]; then
+    case "$desktop" in
+        "kde")
+            WiloRun "Removendo KDE Plasma" sudo dnf remove -y \
+                plasma-desktop \
+                plasma-workspace \
+                kde-plasma-desktop \
+                kde-standard \
+                kde-full
+            ;;
+       "hyprland")
+            WiloRun "Removendo HYPRLAND" sudo dnf remove -y HYPRLAND
+            ;;
+        "xfce")
+            WiloRun "Removendo XFCE" sudo dnf remove -y xfce4 xfce4-session lightdm
+            ;;
+        *)
+            echo "Interface gráfica não reconhecida. Nenhuma ação será tomada."
+            ;;
+    esac
+ else
+    echo "Interface gráfica não será removida."
+fi
 	echo "Reiniciando Plasma"
 	WiloText "Aguarde" 1
 	systemctl --user restart plasma-plasmashell
 
 echo "Desinstalação do WiloOS concluída com sucesso!"
 
-echo 'Eu ate diria "fastfetch", mas como você desinstalou ele, não posso :('
+echo  'Eu ate diria "fastfetch", mas como você desinstalou ele porque você é malvado, não posso :('

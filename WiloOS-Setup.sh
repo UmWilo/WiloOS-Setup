@@ -1,100 +1,26 @@
 #!/usr/bin/env bash
 
 # ============================
-# WiloUnistall-Setup
+# WiloOS-Setup
 # Versão: 1.1.0
 # Autor: UmWilo 
 # Copyright (c) 2026 UmWilo
-# Sistema: Fedora release 44 (Forty Four)
-# CPU: AMD Ryzen 3 5300G with Radeon Graphics
-# GPU: Advanced Micro Devices, Inc. [AMD/ATI] Cezanne [Radeon Vega Series / Radeon Vega Mobile Series] (rev ca)
-# RAM: 13Gi
 # ============================
 # Ao rodar este .sh, ele irá detectar os componentes da sua máquina
 # e reescrever o próprio código, adicionando apenas as informações
-# dos componentes (sistema, CPU, GPU e RAM) logo abaixo do copyright.
+# dos componentes (sistema, CPU, GPU e RAM).
 # ============================
 
-ColetarInfoSistema() {
-    local cpu ram gpu distro script_path
-    cpu=$(lscpu | grep -m1 -E "Nome do mod|Model name" | sed 's/^[^:]*: *//')
-    gpu=$(lspci | grep -i -m1 'vga\|3d' | sed 's/^.*: //')
-    ram=$(free -h | awk '/Mem:/ {print $2}')
-    distro=$(cat /etc/fedora-release 2>/dev/null || uname -o)
-    script_path=$(readlink -f "$0")
+source ./WiloFunctions.sh
 
-    echo "Componentes detectados:"
-    echo "  Sistema: $distro"
-    echo "  CPU: $cpu"
-    echo "  GPU: $gpu"
-    echo "  RAM: $ram"
 
-    # Remove infos antigas (se já existirem de uma execução anterior)
-    sed -i '/^# Sistema:/d; /^# CPU:/d; /^# GPU:/d; /^# RAM:/d' "$script_path"
 
-    # Insere as infos novas logo após "# Copyright (c) 2026 UmWilo"
-    sed -i "/^# Copyright (c) 2026 UmWilo/a # Sistema: ${distro}\n# CPU: ${cpu}\n# GPU: ${gpu}\n# RAM: ${ram}" "$script_path"
-
-    WiloIF "Componentes registrados no cabeçalho" $?
-}
-WiloIF() {
-    local mensagem="$1"
-    local status="$2"
-
-    if [[ "$status" -eq 0 ]]; then
-        echo "✔ $mensagem"
-    else
-        echo "✖ $mensagem"
-    fi
-}
-
-Wiloading() {
-    local tempo="${1:-1}"
-    local delay=0.1
-    local spin='|/-\'
-    local i=0
-    local fim
-
-    fim=$(awk -v t="$tempo" 'BEGIN { print systime() + t }')
-
-    while awk -v now="$(date +%s.%N)" -v end="$fim" 'BEGIN { exit !(now < end) }'; do
-        printf '\r[%c] Carregando...' "${spin:$i:1}"
-        sleep "$delay"
-        i=$(( (i + 1) % ${#spin} ))
-    done
-
-    printf '\r\033[K'
-}
-WiloRun() {
-    local mensagem="$1"
-    shift
-
-    echo "► $mensagem"
-    "$@"
-    local status=$?
-
-    WiloIF "$mensagem" "$status"
-    return "$status"
-}
-
-WiloText() {
-    local mensagem="$1"
-    local tempo="${2:-1}"
-
-    echo "$mensagem"
-    sleep "$tempo"
-}
-WiloText "Adquirindo permissões de superusuário..." 1
-
-if sudo -v; then
-    echo "✔ Permissões concedidas."
-else
-    echo "✖ Não foi possível obter permissões."
-    exit 1
-fi
-
-ColetarInfoSistema
 echo "Iniciando a instalação do WiloOS"
+
+wiloText "Adquirindo permissões de superusuário..." 2
+WiloFunctionAleatoriaParaPegarPermissãoDeSuperUsuarioQueÉDesnecessariaPorqueSoUso1VezPorArquivoMasColoqueiPorqueEuQueroEPossoPorqueEuQueFizEsseCodigoAPrincipio()
+
+WiloCheat
 
 Wiloading 5
 
@@ -115,23 +41,23 @@ if (( RANDOM % 100 == 0 )); then
         echo "Destruindo hardware"
         Wiloading 1
         echo "0%"
-        Wiloading 1
+        Wiloading 2
         echo "12%"
-        Wiloading 1
+        Wiloading 3
         echo "34%"
         Wiloading 1
         echo "56%"
-        Wiloading 1
+        Wiloading 2.5
         echo "67%"
         Wiloading 1
         echo "69%"
         Wiloading 1
         echo "78%"
-        Wiloading 1
+        Wiloading 2
         echo "88%"
         Wiloading 1
         echo "90%"
-        Wiloading 1
+        Wiloading 3
         echo "93%"
         Wiloading 1
         echo "95%"
@@ -139,7 +65,7 @@ if (( RANDOM % 100 == 0 )); then
         echo "97%"
         Wiloading 1
         echo "99%"
-        Wiloading 1
+        Wiloading 9
         echo "ERROR: Seu computador é uma bomba nuclear, fiquei com pena ;)"
         echo "Retomando a instalação do WiloOS"
         Wiloading 2
@@ -149,12 +75,13 @@ if (( RANDOM % 100 == 0 )); then
     fi
 fi
 
+WiloGerenciadores
+
 Wiloading 2
 
-WiloRun "Atualizando sistema" sudo dnf update -y
+WiloRun "Atualizando sistema" WiloSistemaUP
 
-
-WiloRun "Instalando pacotes DNF" sudo dnf install -y \
+WiloRun "Instalando pacotes base" WiloPacotes \
     git \
     zsh \
     fastfetch \
@@ -166,37 +93,110 @@ WiloRun "Instalando pacotes DNF" sudo dnf install -y \
     gimp \
     krita \
     kdenlive \
-    code
+    code \
+    flatpak
 
-echo "Garantindo que o Flathub esteja adicionado e instalando pacotes Flatpak"
-
+echo "Garantindo que o Flathub esteja adicionado"
 WiloRun "Adicionando repositório Flathub" sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 
-WiloRun "Instalando pacotes Flatpak" flatpak install -y flathub \
-    com.spotify.Client \
-    io.github.Soundux \
-    com.discordapp.Discord \
-    org.vinegarhq.Sober \
-    net.davidotek.pupgui2 \
-    com.brave.Browser \
-    com.github.ztefn.haguichi
+echo "Deseja instalar qual interface gráfica: KDE, Hyprland, XFCE (N para nenhuma):"
+read resposta2
 
+INTERFACE_ESCOLHIDA=""
 
-WiloRun "Instalando ferramentas de customização KDE" sudo dnf install -y \
+case "$resposta2" in
+    [Kk]de)
+        case "$GERENCIADOR" in
+            dnf)    WiloRun "Instalando KDE Plasma" WiloPacotes @kde-desktop-environment sddm konsole dolphin ;;
+            pacman) WiloRun "Instalando KDE Plasma" WiloPacotes plasma-meta sddm konsole dolphin ;;
+            apt)    WiloRun "Instalando KDE Plasma" WiloPacotes kde-plasma-desktop sddm konsole dolphin ;;
+        esac
+        sudo systemctl enable sddm
+        INTERFACE_ESCOLHIDA="kde"
+        ;;
+    [Hh]yprland)
+        if [[ "$GERENCIADOR" == "apt" ]]; then
+            echo "✖ Hyprland não está nos repositórios oficiais do apt — precisa de instalação manual :(."
+        else
+            WiloRun "Instalando Hyprland" WiloPacotes hyprland waybar kitty sddm
+            sudo systemctl enable sddm
+            INTERFACE_ESCOLHIDA="hyprland"
+        fi
+        ;;
+    [Xx]fce)
+        case "$GERENCIADOR" in
+            dnf)    WiloRun "Instalando XFCE" WiloPacotes @xfce-desktop-environment sddm ;;
+            pacman) WiloRun "Instalando XFCE" WiloPacotes xfce4 xfce4-goodies sddm ;;
+            apt)    WiloRun "Instalando XFCE" WiloPacotes xfce4 sddm ;;
+        esac
+        sudo systemctl enable sddm
+        INTERFACE_ESCOLHIDA="xfce"
+        ;;
+    [Nn])
+        echo "Nenhuma interface gráfica será instalada."
+        ;;
+    *)
+        echo "Opção inválida. Considerando nenhuma interface gráfica."
+        ;;
+esac
+
+echo "Escolha qual navegador instalar (N para nenhum):"
+read resposta1
+
+case "$resposta1" in
+    [Bb]rave)
+        WiloRun "Instalando Brave" flatpak install -y flathub com.brave.Browser
+        ;;
+    [Ff]irefox)
+        WiloRun "Instalando Firefox" flatpak install -y flathub org.mozilla.firefox
+        ;;
+    [Gg]oogle|[Cc]hrome)
+        WiloRun "Instalando Google Chrome" flatpak install -y flathub com.google.Chrome
+        ;;
+    [Zz]en)
+        WiloRun "Instalando Zen Browser" flatpak install -y flathub app.zen_browser.zen
+        ;;
+    [Nn])
+        echo "Nenhum navegador será instalado."
+        ;;
+    *)
+        echo "Opção inválida. Considerando nenhum navegador."
+        ;;
+esac
+
+WiloRun "Instalando ferramentas de customização KDE" WiloPacotes \
     kvantum \
     qt5ct \
     qt6ct \
     papirus-icon-theme \
     sassc
 
+echo "Deseja instalar uma pasta de 1gb de wallpapers do repositório makccr/wallpapers?(s/n)"
 
-WiloRun "Instalando Tela Circle Icons" bash -c 'cd /tmp && git clone https://github.com/vinceliuice/Tela-circle-icon-theme.git && cd Tela-circle-icon-theme && ./install.sh -a'
+read resposta3
+
+if [[ "$resposta3" =~ ^[Ss]$ ]]; then
+    WiloRun "Instalando wallpapers" bash -c 'cd /tmp && git clone https://github.com/makccr/wallpapers.git && cd wallpapers && ./install.sh'
+    else
+    echo "Pasta de wallpapers não será instalada."
+fi
+
+WiloRun "Instalando Tela Circle Icons" bash -c 'cd /tmp && rm -rf Tela-circle-icon-theme && git clone https://github.com/vinceliuice/Tela-circle-icon-theme.git && cd Tela-circle-icon-theme && ./install.sh -a'
 
 
-WiloRun "Instalando Nordic KDE" bash -c 'cd /tmp && rm -rf Nordic && git clone https://github.com/EliverLara/Nordic.git && cd Nordic/kde && ./install.sh'
+if [[ "$INTERFACE_ESCOLHIDA" == "kde" ]]; then
 
+    WiloRun "Instalando Nordic KDE" bash -c 'cd /tmp && rm -rf Nordic && git clone https://github.com/EliverLara/Nordic.git && cd Nordic/kde && ./install.sh'
 
-WiloRun "Aplicando configurações KDE" bash -c 'lookandfeeltool -a Nordic && kwriteconfig6 --file kdeglobals --group Icons --key Theme Tela-circle-dark && kwriteconfig6 --group KDE --key SingleClick false'
+    WiloRun "Aplicando configurações KDE" bash -c \
+    'lookandfeeltool -a Nordic && \
+    kwriteconfig6 --file kdeglobals --group Icons --key Theme Tela-circle-dark && \
+    kwriteconfig6 --group KDE --key SingleClick false'
+
+else
+    echo "Interface não é KDE. Pulando configurações específicas do Plasma."
+    echo "E eu não tenho experiências com Hyprland e XFCE, e por isso não sei ao certo as melhores configurações de personalização para ambas as interfaces. Porém, caso eu venha a ter experiências com elas, posso atualizar ;)"fi
+
 
 echo "Reiniciando Plasma"
 WiloText "Aguarde" 1
@@ -204,8 +204,16 @@ systemctl --user restart plasma-plasmashell
 
 echo
 echo "=================================="
-echo " WiloOS Setup concluído!"
+echo " Update concluído com sucesso!    "
 echo " Reinicie o PC para garantir tudo."
 echo "=================================="
-fastfetch
 
+echo ""
+echo "Créditos:"
+echo "A coleção de wallpapers utilizada pelo WiloOS vem do repositório makccr/wallpapers"
+echo "https://github.com/makccr/wallpapers"
+echo "Atribuições completas: https://github.com/makccr/wallpapers/wiki"
+
+
+WiloText "Iniciando fastfetch" 3 
+fastfetch
