@@ -92,6 +92,10 @@ Consulte o arquivo `LICENSE` para obter informações sobre a licença do projet
 
 ---
 
+## Relembrando que o WiloOS-Setup NÃO é um sistema operacional :)
+
+---
+
 ### 🗿 WiloOS
 
 **Linux, só que do jeito do Wilo.**
