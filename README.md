@@ -1,4 +1,4 @@
-# 🐧 WiloOS
+# 🐧 WiloOS 2.0.0
 
 **WiloOS** é um conjunto de scripts para automatizar e personalizar a configuração de sistemas Linux.
 
