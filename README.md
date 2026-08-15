@@ -82,7 +82,7 @@ Isso permite manter os componentes do projeto atualizados sem precisar configura
 
  Esta é a versão DEFINITIVA do WiloOS-Setup pelo menos por enquanto
 
- Não vejo mais outras coisas para adicionar para manter o WiloOs-Setup sempre atualizado então pelo menos por enquanto manterei esta versão (2.0.0) por algum tempo
+ Não vejo mais outras coisas para adicionar para manter o WiloOs-Setup sempre atualizado então pelo menos por enquanto manterei esta versão (2.0.0) por algum tempo.
 
 ---
 
