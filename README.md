@@ -61,6 +61,7 @@ Depois execute o WiloChoice.sh:
 chmod +x WiloChoice.sh
 ./WiloChoice.sh
 ```
+## Escolha uma opção ;)
 
 > ⚠️ Alguns recursos podem exigir privilégios de administrador.
 
@@ -73,8 +74,6 @@ O WiloOS possui um sistema próprio de atualização através do:
 ```text
 WiloUpdates.sh
 ```
-## Escolha uma opção ;)
-
 Isso permite manter os componentes do projeto atualizados sem precisar configurar tudo novamente.
 
 ---
