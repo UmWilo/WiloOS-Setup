@@ -80,9 +80,9 @@ Isso permite manter os componentes do projeto atualizados sem precisar configura
 
 ## 🛠️ Status do projeto
 
-O WiloOS está em desenvolvimento ativo.
+ Esta é a versão DEFINITIVA do WiloOS-Setup pelo menos por enquanto
 
-Novos recursos, correções e melhorias podem ser adicionados ao longo do desenvolvimento.
+ Não vejo mais outras coisas para adicionar para manter o WiloOs-Setup sempre atualizado então pelo menos por enquanto manterei esta versão (2.0.0) por algum tempo
 
 ---
 
