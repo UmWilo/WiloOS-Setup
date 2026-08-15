@@ -21,7 +21,7 @@ case "$opcao" in
     1) exec bash "$DIR/WiloOS-Setup.sh" ;;
     2) exec bash "$DIR/WiloUpdates.sh" ;;
     3) exec bash "$DIR/WiloUninstall.sh" ;;
-    4) exec bash "$DIR/WiloConfigArch.sh" ;;
+    4) exec bash "$DIR/WiloConfigArch(Pro Max).sh" ;;
     5) exit 0 ;;
     *) echo "Opção inválida."; exit 1 ;;
 esac
