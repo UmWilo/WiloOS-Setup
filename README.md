@@ -55,7 +55,7 @@ git clone https://github.com/UmWilo/WiloOS-Setup.git
 cd WiloOS-Setup
 ```
 
-Depois execute o ```WiloChoice.sh:
+Depois execute o WiloChoice.sh:
 
 ```bash
 chmod +x WiloChoice.sh
@@ -73,6 +73,7 @@ O WiloOS possui um sistema próprio de atualização através do:
 ```text
 WiloUpdates.sh
 ```
+## Escolha uma opção ;)
 
 Isso permite manter os componentes do projeto atualizados sem precisar configurar tudo novamente.
 
