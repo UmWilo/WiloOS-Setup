@@ -55,11 +55,11 @@ git clone https://github.com/UmWilo/WiloOS-Setup.git
 cd WiloOS-Setup
 ```
 
-Depois execute o instalador:
+Depois execute o ```WiloChoice.sh:
 
 ```bash
-chmod +x WiloOS-Setup.sh
-./WiloOS-Setup.sh
+chmod +x WiloChoice.sh
+./WiloChoice.sh
 ```
 
 > ⚠️ Alguns recursos podem exigir privilégios de administrador.
