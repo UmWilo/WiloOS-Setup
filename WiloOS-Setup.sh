@@ -94,7 +94,8 @@ WiloRun "Instalando pacotes base" WiloPacotes \
     krita \
     kdenlive \
     code \
-    flatpak
+    flatpak \
+    lmms
 
 echo "Garantindo que o Flathub esteja adicionado"
 WiloRun "Adicionando repositório Flathub" sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
